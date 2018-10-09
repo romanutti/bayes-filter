@@ -14,9 +14,9 @@ public class BayesMath {
         double pBwhenS = BayesMath.getPAwhenS(b, s);
         double pBwhenH = BayesMath.getPAwhenH(b, h);
 
-        double P_S_when_AB = (pAwhenS * pBwhenS) / ((pAwhenS * pBwhenS) + (pAwhenH * pBwhenH));
+        double pSwhenAB = (pAwhenS * pBwhenS) / ((pAwhenS * pBwhenS) + (pAwhenH * pBwhenH));
 
-        return P_S_when_AB;
+        return pSwhenAB;
     }
 
     public static double getPAwhenS(String a, Spam s){
