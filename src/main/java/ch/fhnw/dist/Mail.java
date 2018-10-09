@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toMap;
 
 public abstract class Mail {
     protected List<String> words = new ArrayList<>();
-    protected Map<String, Integer> frequencies;
+    protected Map<String, Double> frequencies;
 
     public List<String> initiateFiles(String path) {
         List<String> files = new ArrayList<>();
@@ -47,11 +47,11 @@ public abstract class Mail {
         return words;
     }
 
-    public Map<String, Integer> initiateWordFrequency(List<String> words) {
-        Map<String, Integer> wordFrequency = words.stream()
-                .collect(toMap(w -> w,
-                        w -> 1,
-                        Integer::sum));
+    public Map<String, Double> initiateWordFrequency(List<String> words) {
+        Map<String, Double> wordFrequency = words.stream()
+                .collect(toMap(entry -> entry, // key object
+                               entry -> 1.0,     // value object
+                               Double::sum));
 
         return wordFrequency;
     }
@@ -64,15 +64,15 @@ public abstract class Mail {
         this.words = words;
     }
 
-    public Map<String, Integer> getFrequencies() {
+    public Map<String, Double> getFrequencies() {
         return frequencies;
     }
 
-    public void setFrequencies(Map<String, Integer> wordFrequency) {
+    public void setFrequencies(Map<String, Double> wordFrequency) {
         this.frequencies = wordFrequency;
     }
 
-    public int getFrencency(String word){
-        return frequencies.get(word);
+    public double getFrencency(String word){
+        return frequencies.containsKey(word) ? frequencies.get(word): 0;
     }
 }
