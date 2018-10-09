@@ -34,7 +34,7 @@ public abstract class MathUtil {
      * @return P(word | S)
      */
     public static double getPWordWhenS(String word, Dataset s) {
-        return s.getFrequecency(word) / s.getFrequencies().size();
+        return s.getFrequecency(word) / s.getFileCount();
     }
 
     /**
@@ -43,7 +43,7 @@ public abstract class MathUtil {
      * @return P(word | H)
      */
     public static double getPWordWhenH(String word, Dataset h) {
-        return h.getFrequecency(word) / h.getFrequencies().size();
+        return h.getFrequecency(word) / h.getFileCount();
     }
 
     /*public static double getPH() {

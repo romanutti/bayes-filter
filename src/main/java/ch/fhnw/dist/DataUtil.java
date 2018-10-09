@@ -63,4 +63,8 @@ public abstract class DataUtil {
         return words;
     }
 
+    public static int countFiles(List<String> files){
+        return files.size();
+    }
+
 }

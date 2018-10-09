@@ -11,6 +11,7 @@ public class Dataset {
 
     private List<String> words;
     private Map<String, Double> frequencies;
+    private int fileCount;
 
 /*    public class Mail extends Dataset {
 
@@ -36,6 +37,7 @@ public class Dataset {
         List<String> files = DataUtil.getFiles(path);
         words = DataUtil.getWords(files);
         frequencies = calculateWordFrecuency(words);
+        fileCount = DataUtil.countFiles(files);
     }
 
     ;
@@ -67,4 +69,11 @@ public class Dataset {
         this.frequencies = wordFrequency;
     }
 
+    public int getFileCount() {
+        return fileCount;
+    }
+
+    public void setFileCount(int fileCount) {
+        this.fileCount = fileCount;
+    }
 }

@@ -8,12 +8,12 @@ import java.util.stream.Stream;
 public class BayesHandler {
     private Dataset ham;
     private Dataset spam;
-    //private Map<String, Term> knowledge;
+    private Map<String, Term> knowledge;
 
     public BayesHandler() {
         this.ham = new Dataset(DataUtil.PATH_HAM_TRAINING);
         this.spam = new Dataset(DataUtil.PATH_SPAM_TRAINING);
-        //this.knowledge = train(this.ham, this.spam);
+        this.knowledge = train(this.ham, this.spam);
     }
 
     public Map<String, Term> train(Dataset ham, Dataset spam) {
@@ -25,14 +25,14 @@ public class BayesHandler {
     }
 
     public void calibrate() {
-        Dataset mails = new Dataset(DataUtil.PATH_HAM_CALIBRATION);
+        Dataset mails = new Dataset(DataUtil.PATH_SPAM_CALIBRATION);
 
         List<String> files = DataUtil.getFiles(DataUtil.PATH_HAM_CALIBRATION);
         for (String file : files) {
             List<String> words = DataUtil.getWords(file);
             double p = MathUtil.getProbability(words, spam, ham);
             System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(String.format("%.12f", p));
+            System.out.println(String.format("%.100f", p));
         }
     }
 
@@ -52,11 +52,11 @@ public class BayesHandler {
         this.spam = spam;
     }
 
-    /*public Map<String, Term> getKnowledge() {
+    public Map<String, Term> getKnowledge() {
         return knowledge;
     }
 
     public void setKnowledge(Map<String, Term> wordCount) {
         this.knowledge = wordCount;
-    }*/
+    }
 }
