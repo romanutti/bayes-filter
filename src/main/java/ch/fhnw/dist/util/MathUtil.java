@@ -6,17 +6,19 @@ import java.util.List;
 
 /**
  * Utility class for math operations
- *
+ * <p>
  * Module dist, assignment 1
+ *
  * @author M. Romanutti
  */
 public abstract class MathUtil {
 
     /**
      * Calculate the cumulated probability of a list of word, based on spam and ham training datasets
+     *
      * @param words list of words in email
-     * @param spam spam training dataset
-     * @param ham ham training dataset
+     * @param spam  spam training dataset
+     * @param ham   ham training dataset
      * @return probability of spam, P(S|words)
      */
     public static double getProbability(List<String> words, Dataset spam, Dataset ham) {
@@ -42,6 +44,7 @@ public abstract class MathUtil {
 
     /**
      * Calculate how likely a word appears in spam, based on spam training dataset
+     *
      * @param word word to check
      * @param spam spam dataset
      * @return probability of word in spam dataset, P(word|S)
@@ -52,8 +55,9 @@ public abstract class MathUtil {
 
     /**
      * Calculate how likely a word appears in ham, based on ham training dataset
+     *
      * @param word word to check
-     * @param ham ham dataset
+     * @param ham  ham dataset
      * @return probability of word in ham dataset, P(word|H)
      */
     public static double getPWordWhenH(String word, Dataset ham) {

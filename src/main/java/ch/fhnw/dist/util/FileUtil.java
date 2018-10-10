@@ -3,7 +3,6 @@ package main.java.ch.fhnw.dist.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,8 +11,21 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+/**
+ * Utility class for file operations
+ * <p>
+ * Module dist, assignment 1
+ *
+ * @author M. Romanutti
+ */
 public abstract class FileUtil {
 
+    /**
+     * Get filenames from directory
+     *
+     * @param path directory to files
+     * @return list of fully qualified paths
+     */
     public static List<String> getFiles(String path) {
         List<String> files = new ArrayList<>();
         try (Stream<Path> paths = Files.walk(Paths.get(path))) {
@@ -25,6 +37,12 @@ public abstract class FileUtil {
         return files;
     }
 
+    /**
+     * Get words from several files
+     *
+     * @param files fully qualified filenames
+     * @return complete list of all words
+     */
     public static List<String> getWords(List<String> files) {
         List<String> words = new ArrayList<>();
         for (String file : files) {
@@ -43,6 +61,12 @@ public abstract class FileUtil {
         return words;
     }
 
+    /**
+     * Get words from single file
+     *
+     * @param mail fully qualified filename
+     * @return list of all words
+     */
     public static List<String> getWords(String mail) {
         List<String> words = new ArrayList<>();
         try {
@@ -59,7 +83,13 @@ public abstract class FileUtil {
         return words;
     }
 
-    public static int countFiles(List<String> files){
+    /**
+     * Count number of files
+     *
+     * @param files list of files
+     * @return number of files
+     */
+    public static int countFiles(List<String> files) {
         return files.size();
     }
 
