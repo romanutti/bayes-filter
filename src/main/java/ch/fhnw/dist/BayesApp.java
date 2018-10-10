@@ -2,8 +2,9 @@ package main.java.ch.fhnw.dist;
 
 /**
  * Class to process a single complete bayes-filter iteration
- *
+ * <p>
  * Module dist, assignment 1
+ *
  * @author M. Romanutti
  */
 public class BayesApp {

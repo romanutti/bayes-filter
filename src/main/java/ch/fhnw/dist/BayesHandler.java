@@ -7,8 +7,9 @@ import java.util.List;
 
 /**
  * Class to handle the different phases
- *
+ * <p>
  * Module dist, assignment 1
+ *
  * @author M. Romanutti
  */
 public class BayesHandler {
@@ -145,9 +146,10 @@ public class BayesHandler {
 
     /**
      * Print a summary per phase.
+     *
      * @param phase phase that should be summarized
      */
-    public void printSummary(BayesApp.Phase phase){
+    public void printSummary(BayesApp.Phase phase) {
         int fileCount;
         int wrongClassificationCount;
 
@@ -168,14 +170,16 @@ public class BayesHandler {
             System.out.println("# Ham count: " + ham.getFileCount());                        // Number of ham mails
             System.out.println("# Spam count: " + spam.getFileCount());                      // Number of spam mails
             // Number of false classifications
-            System.out.println("# False positives: " + ham.getWrongClassification());        // Classified as spam, but was originally ham
-            System.out.println("# False negatives: " + spam.getWrongClassification());       // Classified as ham, but was originally spam
+            System.out.println("# False positives: " + ham
+                    .getWrongClassification());        // Classified as spam, but was originally ham
+            System.out.println("# False negatives: " + spam
+                    .getWrongClassification());       // Classified as ham, but was originally spam
 
             // Count totals
             fileCount = ham.getFileCount() + spam.getFileCount();
             wrongClassificationCount = ham.getWrongClassification() + spam.getWrongClassification();
             // Detection rate
-            System.out.println("# Detection rate (in %): " +  (100.00 - (( 100 * wrongClassificationCount ) / fileCount )));
+            System.out.println("# Detection rate (in %): " + (100.00 - ((100 * wrongClassificationCount) / fileCount)));
             break;
         case TEST:
             // Number of mails
@@ -183,14 +187,16 @@ public class BayesHandler {
             System.out.println("# Ham count: " + ham.getFileCount());                        // Number of ham mails
             System.out.println("# Spam count: " + spam.getFileCount());                      // Number of spam mails
             // Number of false classifications
-            System.out.println("# False positives: " + ham.getWrongClassification());        // Classified as spam, but was originally ham
-            System.out.println("# False negatives: " + spam.getWrongClassification());       // Classified as ham, but was originally spam
+            System.out.println("# False positives: " + ham
+                    .getWrongClassification());        // Classified as spam, but was originally ham
+            System.out.println("# False negatives: " + spam
+                    .getWrongClassification());       // Classified as ham, but was originally spam
 
             // Count totals
             fileCount = ham.getFileCount() + spam.getFileCount();
             wrongClassificationCount = ham.getWrongClassification() + spam.getWrongClassification();
             // Detection rate
-            System.out.println("# Detection rate (in %): " +  (100.00 - (( 100 * wrongClassificationCount ) / fileCount )));
+            System.out.println("# Detection rate (in %): " + (100.00 - ((100 * wrongClassificationCount) / fileCount)));
         }
 
         // Output footer
