@@ -1,39 +1,201 @@
 package main.java.ch.fhnw.dist;
 
+import main.java.ch.fhnw.dist.util.FileUtil;
+import main.java.ch.fhnw.dist.util.MathUtil;
+
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+/**
+ * Class to handle the different phases
+ * <p>
+ * Module dist, assignment 1
+ *
+ * @author M. Romanutti
+ */
 public class BayesHandler {
-    private Dataset ham;
-    private Dataset spam;
-    private Map<String, Term> knowledge;
 
+    // Attributes
+    private Dataset ham;        // Ham dataset
+    private Dataset spam;       // Spam dataset
+
+    /**
+     * Initial constructor
+     */
     public BayesHandler() {
-        this.ham = new Dataset(DataUtil.PATH_HAM_TRAINING);
-        this.spam = new Dataset(DataUtil.PATH_SPAM_TRAINING);
-        this.knowledge = train(this.ham, this.spam);
     }
 
-    public Map<String, Term> train(Dataset ham, Dataset spam) {
-        return Stream.concat(ham.getFrequencies().keySet().stream(), spam.getFrequencies().keySet().stream()).distinct()
-                .collect(Collectors.toMap(entry -> entry,
-                        entry -> new Term(entry, ham.getFrequecency(entry), spam.getFrequecency(entry),
-                                MathUtil.getPWordWhenS(entry, spam), MathUtil.getPWordWhenH(entry, ham))));
-
+    /**
+     * Constructor for phases calibration and test
+     *
+     * @param ham  ham training dataset
+     * @param spam spam training dataset
+     */
+    public BayesHandler(Dataset ham, Dataset spam) {
+        this.ham = ham;
+        this.spam = spam;
     }
 
+    /**
+     * Process train phase. This phase consist of reading ham and spam files and
+     * calculate frequencies per word.
+     */
+    public void train() {
+        // TODO Change to system independent paths
+        this.ham = new Dataset(
+                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\ham-" + BayesApp.Phase.TRAINING
+                        .getInfix());
+        this.spam = new Dataset(
+                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\spam-" + BayesApp.Phase.TRAINING
+                        .getInfix());
+    }
+
+    /**
+     * Process calibration phase. This phase consist of reading ham and spam files,
+     * calculate probability per mail and count false classified mails.
+     */
     public void calibrate() {
-        Dataset mails = new Dataset(DataUtil.PATH_SPAM_CALIBRATION);
+        // TODO Workaround
+        ham.setWrongClassification(0);
+        spam.setWrongClassification(0);
 
-        List<String> files = DataUtil.getFiles(DataUtil.PATH_HAM_CALIBRATION);
+        // TODO Change to system independent paths
+        // Get ham mails
+        List<String> files = FileUtil.getFiles(
+                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\ham-" + BayesApp.Phase.CALIBRATION
+                        .getInfix());
+
         for (String file : files) {
-            List<String> words = DataUtil.getWords(file);
+            // Get words per mail
+            List<String> words = FileUtil.getWords(file);
+            // Calculate probability per mail based on training data
             double p = MathUtil.getProbability(words, spam, ham);
-            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(String.format("%.100f", p));
+
+            if (p > BayesApp.THRESHOLD) {
+                // Increment wrongClassification if probability is higher than threshold
+                // even though the mail was originally classified as ham
+                ham.setWrongClassification(ham.getWrongClassification() + 1);
+            }
         }
+
+        // TODO Change to system independent paths
+        // Get spam mails
+        files = FileUtil.getFiles(
+                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\spam-" + BayesApp.Phase.CALIBRATION
+                        .getInfix());
+        for (String file : files) {
+            // get words per mail
+            List<String> words = FileUtil.getWords(file);
+            // Calculate probability per mail based on trainig data
+            double p = MathUtil.getProbability(words, spam, ham);
+
+            if (p < BayesApp.THRESHOLD || Double.isNaN(p)) {
+                // Increment wrongClassification if probability is lower than threshold
+                // even though the mail was originally classified as spam
+                spam.setWrongClassification(spam.getWrongClassification() + 1);
+            }
+        }
+    }
+
+    /**
+     * Process test phase. This phase consist of reading ham and spam files,
+     * calculate probability per mail and count false classified mails.
+     */
+    // TODO Same code as test -> DRY
+    public void test() {
+        // TODO Workaround
+        ham.setWrongClassification(0);
+        spam.setWrongClassification(0);
+
+        // TODO Change to system independent paths
+        // Get ham mails
+        List<String> files = FileUtil.getFiles(
+                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\ham-" + BayesApp.Phase.TEST
+                        .getInfix());
+
+        for (String file : files) {
+            // Get words per mail
+            List<String> words = FileUtil.getWords(file);
+            // Calculate probability per mail based on training data
+            double p = MathUtil.getProbability(words, spam, ham);
+
+            if (p > BayesApp.THRESHOLD) {
+                // Increment wrongClassification if probability is higher than threshold
+                // even though the mail was originally classified as ham
+                ham.setWrongClassification(ham.getWrongClassification() + 1);
+            }
+        }
+
+        // TODO Change to system independent paths
+        // Get spam mails
+        files = FileUtil.getFiles(
+                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\spam-" + BayesApp.Phase.TEST
+                        .getInfix());
+        for (String file : files) {
+            // get words per mail
+            List<String> words = FileUtil.getWords(file);
+            // Calculate probability per mail based on trainig data
+            double p = MathUtil.getProbability(words, spam, ham);
+
+            if (p < BayesApp.THRESHOLD || Double.isNaN(p)) {
+                // Increment wrongClassification if probability is lower than threshold
+                // even though the mail was originally classified as spam
+                spam.setWrongClassification(spam.getWrongClassification() + 1);
+            }
+        }
+    }
+
+    public void printSummary(BayesApp.Phase phase){
+        int fileCount;
+        int wrongClassificationCount;
+
+        // Output header
+        System.out.println("####################################");
+        System.out.println("#");
+        System.out.println("# " + phase.name());
+
+        switch (phase) {
+        case TRAINING:
+            // Number of mails
+            System.out.println("# Ham count: " + ham.getFileCount());                       // Number of ham mails
+            System.out.println("# Spam count: " + spam.getFileCount());                     // Number of spam mails
+            break;
+        case CALIBRATION:
+            // Number of mails
+            // TODO Count size of calibration datasets
+            System.out.println("# Ham count: " + ham.getFileCount());                        // Number of ham mails
+            System.out.println("# Spam count: " + spam.getFileCount());                      // Number of spam mails
+            // Number of false classifications
+            System.out.println("# False positives: " + ham.getWrongClassification());        // Classified as spam, but was originally ham
+            System.out.println("# False negatives: " + spam.getWrongClassification());       // Classified as ham, but was originally spam
+
+            // Count totals
+            fileCount = ham.getFileCount() + spam.getFileCount();
+            wrongClassificationCount = ham.getWrongClassification() + spam.getWrongClassification();
+            // Detection rate
+            System.out.println("# Detection rate (in %): " +  (100.00 - (( 100 * wrongClassificationCount ) / fileCount )));
+            break;
+        case TEST:
+            // Number of mails
+            // TODO Count size of calibration datasets
+            System.out.println("# Ham count: " + ham.getFileCount());                        // Number of ham mails
+            System.out.println("# Spam count: " + spam.getFileCount());                      // Number of spam mails
+            // Number of false classifications
+            System.out.println("# False positives: " + ham.getWrongClassification());        // Classified as spam, but was originally ham
+            System.out.println("# False negatives: " + spam.getWrongClassification());       // Classified as ham, but was originally spam
+
+            // Count totals
+            fileCount = ham.getFileCount() + spam.getFileCount();
+            wrongClassificationCount = ham.getWrongClassification() + spam.getWrongClassification();
+            // Detection rate
+            System.out.println("# Detection rate (in %): " +  (100.00 - (( 100 * wrongClassificationCount ) / fileCount )));
+        }
+
+        // Output footer
+        System.out.println("#");
+        System.out.println("# Alpha = " + BayesApp.DEFAULT_FREQUENCY + ", Schwellenwert = " + BayesApp.THRESHOLD);
+        System.out.println("####################################");
+        System.out.println();
+
     }
 
     public Dataset getHam() {
@@ -52,11 +214,11 @@ public class BayesHandler {
         this.spam = spam;
     }
 
-    public Map<String, Term> getKnowledge() {
+    /*public Map<String, Term> getKnowledge() {
         return knowledge;
     }
 
     public void setKnowledge(Map<String, Term> wordCount) {
         this.knowledge = wordCount;
-    }
+    }*/
 }

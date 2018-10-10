@@ -1,5 +1,7 @@
 package main.java.ch.fhnw.dist;
 
+import main.java.ch.fhnw.dist.util.FileUtil;
+
 import java.util.List;
 import java.util.Map;
 
@@ -7,37 +9,17 @@ import static java.util.stream.Collectors.toMap;
 
 public class Dataset {
 
-    public static final double DEFAULT_FREQUENCY = 1;
 
     private List<String> words;
     private Map<String, Double> frequencies;
     private int fileCount;
-
-/*    public class Mail extends Dataset {
-
-        private boolean isSpam;
-
-        public Mail(String path){
-            super(path);
-        }
-
-        public void classify(){
-        }
-
-        public boolean isSpam() {
-            return isSpam;
-        }
-
-        public void setSpam(boolean spam) {
-            isSpam = spam;
-        }
-    }*/
+    private int wrongClassification;
 
     public Dataset(String path) {
-        List<String> files = DataUtil.getFiles(path);
-        words = DataUtil.getWords(files);
+        List<String> files = FileUtil.getFiles(path);
+        words = FileUtil.getWords(files);
         frequencies = calculateWordFrecuency(words);
-        fileCount = DataUtil.countFiles(files);
+        fileCount = FileUtil.countFiles(files);
     }
 
     ;
@@ -48,7 +30,7 @@ public class Dataset {
 
     public double getFrequecency(String word) {
         // set default value if word not existing (2b)
-        double frequency = frequencies.containsKey(word) ? frequencies.get(word) : DEFAULT_FREQUENCY;
+        double frequency = frequencies.containsKey(word) ? frequencies.get(word) : BayesApp.DEFAULT_FREQUENCY;
 
         return frequency;
     }
@@ -75,5 +57,13 @@ public class Dataset {
 
     public void setFileCount(int fileCount) {
         this.fileCount = fileCount;
+    }
+
+    public int getWrongClassification() {
+        return wrongClassification;
+    }
+
+    public void setWrongClassification(int wrongClassification) {
+        this.wrongClassification = wrongClassification;
     }
 }

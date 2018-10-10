@@ -1,4 +1,6 @@
-package main.java.ch.fhnw.dist;
+package main.java.ch.fhnw.dist.util;
+
+import main.java.ch.fhnw.dist.Dataset;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
-package main.java.ch.fhnw.dist;
+package main.java.ch.fhnw.dist.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,12 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-public abstract class DataUtil {
-
-    public static final String PATH_HAM_TRAINING = "C:\\Users\\marco\\Dropbox\\FHNW\\dist\\Uebungen\\Bayes-SpamFilter\\ham-anlern";
-    public static final String PATH_SPAM_TRAINING = "C:\\Users\\marco\\Dropbox\\FHNW\\dist\\Uebungen\\Bayes-SpamFilter\\spam-anlern";
-    public static final String PATH_HAM_CALIBRATION = "C:\\Users\\marco\\Dropbox\\FHNW\\dist\\Uebungen\\Bayes-SpamFilter\\ham-kallibrierung";
-    public static final String PATH_SPAM_CALIBRATION = "C:\\Users\\marco\\Dropbox\\FHNW\\dist\\Uebungen\\Bayes-SpamFilter\\spam-kallibrierung";
+public abstract class FileUtil {
 
     public static List<String> getFiles(String path) {
         List<String> files = new ArrayList<>();
