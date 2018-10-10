@@ -7,9 +7,8 @@ import java.util.List;
 
 /**
  * Class to handle the different phases
- * <p>
- * Module dist, assignment 1
  *
+ * Module dist, assignment 1
  * @author M. Romanutti
  */
 public class BayesHandler {
@@ -144,6 +143,10 @@ public class BayesHandler {
         }
     }
 
+    /**
+     * Print a summary per phase.
+     * @param phase phase that should be summarized
+     */
     public void printSummary(BayesApp.Phase phase){
         int fileCount;
         int wrongClassificationCount;
@@ -198,6 +201,7 @@ public class BayesHandler {
 
     }
 
+    // Getters and setters
     public Dataset getHam() {
         return ham;
     }
@@ -214,11 +218,4 @@ public class BayesHandler {
         this.spam = spam;
     }
 
-    /*public Map<String, Term> getKnowledge() {
-        return knowledge;
-    }
-
-    public void setKnowledge(Map<String, Term> wordCount) {
-        this.knowledge = wordCount;
-    }*/
 }
