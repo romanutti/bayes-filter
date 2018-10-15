@@ -3,9 +3,6 @@ package main.java.ch.fhnw.dist;
 import main.java.ch.fhnw.dist.util.FileUtil;
 import main.java.ch.fhnw.dist.util.MathUtil;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -43,12 +40,8 @@ public class BayesHandler {
      * calculate frequencies per word.
      */
     public void train() {
-        this.ham = new Dataset(
-                "src/main/resources/ham-" + BayesApp.Phase.TRAINING
-                        .getInfix());
-        this.spam = new Dataset(
-                "src/main/resources/spam-" + BayesApp.Phase.TRAINING
-                        .getInfix());
+        this.ham = new Dataset("src/main/resources/ham-" + BayesApp.Phase.TRAINING.getInfix());
+        this.spam = new Dataset("src/main/resources/spam-" + BayesApp.Phase.TRAINING.getInfix());
     }
 
     /**
@@ -60,9 +53,7 @@ public class BayesHandler {
         spam.setWrongClassification(0);
 
         // Get ham mails
-        List<String> files = FileUtil.getFiles(
-                "src/main/resources/ham-" + BayesApp.Phase.CALIBRATION
-                        .getInfix());
+        List<String> files = FileUtil.getFiles("src/main/resources/ham-" + BayesApp.Phase.CALIBRATION.getInfix());
 
         for (String file : files) {
             // Get words per mail
@@ -80,11 +71,8 @@ public class BayesHandler {
         // Set number of processed files
         ham.setProcessedFileCount(files.size());
 
-
         // Get spam mails
-        files = FileUtil.getFiles(
-                "src/main/resources/spam-" + BayesApp.Phase.CALIBRATION
-                        .getInfix());
+        files = FileUtil.getFiles("src/main/resources/spam-" + BayesApp.Phase.CALIBRATION.getInfix());
         for (String file : files) {
             // get words per mail
             List<String> words = FileUtil.getWords(file);
@@ -112,9 +100,7 @@ public class BayesHandler {
         spam.setWrongClassification(0);
 
         // Get ham mails
-        List<String> files = FileUtil.getFiles(
-                "src/main/resources/ham-" + BayesApp.Phase.TEST
-                        .getInfix());
+        List<String> files = FileUtil.getFiles("src/main/resources/ham-" + BayesApp.Phase.TEST.getInfix());
 
         for (String file : files) {
             // Get words per mail
@@ -132,11 +118,8 @@ public class BayesHandler {
         // Set number of processed files
         ham.setProcessedFileCount(files.size());
 
-
         // Get spam mails
-        files = FileUtil.getFiles(
-                "src/main/resources/spam-" + BayesApp.Phase.TEST
-                        .getInfix());
+        files = FileUtil.getFiles("src/main/resources/spam-" + BayesApp.Phase.TEST.getInfix());
         for (String file : files) {
             // get words per mail
             List<String> words = FileUtil.getWords(file);
