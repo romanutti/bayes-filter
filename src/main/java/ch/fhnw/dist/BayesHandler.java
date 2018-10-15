@@ -77,6 +77,10 @@ public class BayesHandler {
             }
         }
 
+        // Set number of processed files
+        ham.setProcessedFileCount(files.size());
+
+
         // Get spam mails
         files = FileUtil.getFiles(
                 "src/main/resources/spam-" + BayesApp.Phase.CALIBRATION
@@ -93,6 +97,10 @@ public class BayesHandler {
                 spam.setWrongClassification(spam.getWrongClassification() + 1);
             }
         }
+
+        // Set number of processed files
+        spam.setProcessedFileCount(files.size());
+
     }
 
     /**
@@ -121,6 +129,10 @@ public class BayesHandler {
             }
         }
 
+        // Set number of processed files
+        ham.setProcessedFileCount(files.size());
+
+
         // Get spam mails
         files = FileUtil.getFiles(
                 "src/main/resources/spam-" + BayesApp.Phase.TEST
@@ -137,6 +149,10 @@ public class BayesHandler {
                 spam.setWrongClassification(spam.getWrongClassification() + 1);
             }
         }
+
+        // Set number of processed files
+        spam.setProcessedFileCount(files.size());
+
     }
 
     /**
@@ -165,9 +181,8 @@ public class BayesHandler {
             System.out.println("# " + phase.name());
 
             // Number of mails
-            // TODO Count size of calibration datasets
-            System.out.println("# Ham count: " + ham.getFileCount());                        // Number of ham mails
-            System.out.println("# Spam count: " + spam.getFileCount());                      // Number of spam mails
+            System.out.println("# Ham count: " + ham.getProcessedFileCount());              // Number of ham mails
+            System.out.println("# Spam count: " + spam.getProcessedFileCount());            // Number of spam mails
             // Number of false classifications
             System.out.println("# False positives: " + ham
                     .getWrongClassification());        // Classified as spam, but was actually ham
@@ -175,7 +190,7 @@ public class BayesHandler {
                     .getWrongClassification());       // Classified as ham, but was actually spam
 
             // Count totals
-            fileCount = ham.getFileCount() + spam.getFileCount();
+            fileCount = ham.getProcessedFileCount() + spam.getProcessedFileCount();
             wrongClassificationCount = ham.getWrongClassification() + spam.getWrongClassification();
             // Detection rate
             System.out.println("# Detection rate (in %): " + (100.00 - ((100 * wrongClassificationCount) / fileCount)));
@@ -186,9 +201,8 @@ public class BayesHandler {
             System.out.println("# " + phase.name());
 
             // Number of mails
-            // TODO Count size of calibration datasets
-            System.out.println("# Ham count: " + ham.getFileCount());                        // Number of ham mails
-            System.out.println("# Spam count: " + spam.getFileCount());                      // Number of spam mails
+            System.out.println("# Ham count: " + ham.getProcessedFileCount());              // Number of ham mails
+            System.out.println("# Spam count: " + spam.getProcessedFileCount());            // Number of spam mails
             // Number of false classifications
             System.out.println("# False positives: " + ham
                     .getWrongClassification());        // Classified as spam, but was actually ham
@@ -196,7 +210,7 @@ public class BayesHandler {
                     .getWrongClassification());       // Classified as ham, but was actually spam
 
             // Count totals
-            fileCount = ham.getFileCount() + spam.getFileCount();
+            fileCount = ham.getProcessedFileCount() + spam.getProcessedFileCount();
             wrongClassificationCount = ham.getWrongClassification() + spam.getWrongClassification();
             // Detection rate
             System.out.println("# Detection rate (in %): " + (100.00 - ((100 * wrongClassificationCount) / fileCount)));

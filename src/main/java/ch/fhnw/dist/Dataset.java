@@ -26,9 +26,13 @@ public class Dataset {
      */
     private Map<String, Double> frequencies;
     /**
-     * Number of files
+     * Number of files in base dataset
      */
     private int fileCount;
+    /**
+     * Number of files in processed dataset
+     */
+    private int processedFileCount;
     /**
      * Number of wrong classifications
      */
@@ -44,6 +48,7 @@ public class Dataset {
         words = FileUtil.getWords(files);
         frequencies = calculateWordFrecuency(words);
         fileCount = FileUtil.countFiles(files);
+        processedFileCount = 0;
     }
 
     ;
@@ -99,6 +104,14 @@ public class Dataset {
 
     public void setFileCount(int fileCount) {
         this.fileCount = fileCount;
+    }
+
+    public int getProcessedFileCount() {
+        return processedFileCount;
+    }
+
+    public void setProcessedFileCount(int processedFileCount) {
+        this.processedFileCount = processedFileCount;
     }
 
     public int getWrongClassification() {
