@@ -3,6 +3,9 @@ package main.java.ch.fhnw.dist;
 import main.java.ch.fhnw.dist.util.FileUtil;
 import main.java.ch.fhnw.dist.util.MathUtil;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -40,12 +43,11 @@ public class BayesHandler {
      * calculate frequencies per word.
      */
     public void train() {
-        // TODO Change to system independent paths
         this.ham = new Dataset(
-                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\ham-" + BayesApp.Phase.TRAINING
+                "src/main/resources/ham-" + BayesApp.Phase.TRAINING
                         .getInfix());
         this.spam = new Dataset(
-                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\spam-" + BayesApp.Phase.TRAINING
+                "src/main/resources/spam-" + BayesApp.Phase.TRAINING
                         .getInfix());
     }
 
@@ -54,14 +56,12 @@ public class BayesHandler {
      * calculate probability per mail and count false classified mails.
      */
     public void calibrate() {
-        // TODO Workaround
         ham.setWrongClassification(0);
         spam.setWrongClassification(0);
 
-        // TODO Change to system independent paths
         // Get ham mails
         List<String> files = FileUtil.getFiles(
-                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\ham-" + BayesApp.Phase.CALIBRATION
+                "src/main/resources/ham-" + BayesApp.Phase.CALIBRATION
                         .getInfix());
 
         for (String file : files) {
@@ -77,10 +77,9 @@ public class BayesHandler {
             }
         }
 
-        // TODO Change to system independent paths
         // Get spam mails
         files = FileUtil.getFiles(
-                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\spam-" + BayesApp.Phase.CALIBRATION
+                "src/main/resources/spam-" + BayesApp.Phase.CALIBRATION
                         .getInfix());
         for (String file : files) {
             // get words per mail
@@ -100,16 +99,13 @@ public class BayesHandler {
      * Process test phase. This phase consist of reading ham and spam files,
      * calculate probability per mail and count false classified mails.
      */
-    // TODO Same code as test -> DRY
     public void test() {
-        // TODO Workaround
         ham.setWrongClassification(0);
         spam.setWrongClassification(0);
 
-        // TODO Change to system independent paths
         // Get ham mails
         List<String> files = FileUtil.getFiles(
-                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\ham-" + BayesApp.Phase.TEST
+                "src/main/resources/ham-" + BayesApp.Phase.TEST
                         .getInfix());
 
         for (String file : files) {
@@ -125,10 +121,9 @@ public class BayesHandler {
             }
         }
 
-        // TODO Change to system independent paths
         // Get spam mails
         files = FileUtil.getFiles(
-                "C:\\Users\\marco\\IdeaProjects\\bayes-filter\\src\\main\\resources\\spam-" + BayesApp.Phase.TEST
+                "src/main/resources/spam-" + BayesApp.Phase.TEST
                         .getInfix());
         for (String file : files) {
             // get words per mail
