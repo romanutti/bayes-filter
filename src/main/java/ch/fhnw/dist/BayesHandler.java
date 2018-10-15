@@ -148,57 +148,65 @@ public class BayesHandler {
         int fileCount;
         int wrongClassificationCount;
 
-        // Output header
-        System.out.println("####################################");
-        System.out.println("#");
-        System.out.println("# " + phase.name());
-
         switch (phase) {
         case TRAINING:
+            // Output header
+            System.out.println("####################################");
+            System.out.println("#");
+            System.out.println("# " + phase.name());
+
             // Number of mails
             System.out.println("# Ham count: " + ham.getFileCount());                       // Number of ham mails
             System.out.println("# Spam count: " + spam.getFileCount());                     // Number of spam mails
+            System.out.println("#");
             break;
         case CALIBRATION:
+            // Output header
+            System.out.println("# " + phase.name());
+
             // Number of mails
             // TODO Count size of calibration datasets
             System.out.println("# Ham count: " + ham.getFileCount());                        // Number of ham mails
             System.out.println("# Spam count: " + spam.getFileCount());                      // Number of spam mails
             // Number of false classifications
             System.out.println("# False positives: " + ham
-                    .getWrongClassification());        // Classified as spam, but was originally ham
+                    .getWrongClassification());        // Classified as spam, but was actually ham
             System.out.println("# False negatives: " + spam
-                    .getWrongClassification());       // Classified as ham, but was originally spam
+                    .getWrongClassification());       // Classified as ham, but was actually spam
 
             // Count totals
             fileCount = ham.getFileCount() + spam.getFileCount();
             wrongClassificationCount = ham.getWrongClassification() + spam.getWrongClassification();
             // Detection rate
             System.out.println("# Detection rate (in %): " + (100.00 - ((100 * wrongClassificationCount) / fileCount)));
+            System.out.println("#");
             break;
         case TEST:
+            // Output header
+            System.out.println("# " + phase.name());
+
             // Number of mails
             // TODO Count size of calibration datasets
             System.out.println("# Ham count: " + ham.getFileCount());                        // Number of ham mails
             System.out.println("# Spam count: " + spam.getFileCount());                      // Number of spam mails
             // Number of false classifications
             System.out.println("# False positives: " + ham
-                    .getWrongClassification());        // Classified as spam, but was originally ham
+                    .getWrongClassification());        // Classified as spam, but was actually ham
             System.out.println("# False negatives: " + spam
-                    .getWrongClassification());       // Classified as ham, but was originally spam
+                    .getWrongClassification());       // Classified as ham, but was actually spam
 
             // Count totals
             fileCount = ham.getFileCount() + spam.getFileCount();
             wrongClassificationCount = ham.getWrongClassification() + spam.getWrongClassification();
             // Detection rate
             System.out.println("# Detection rate (in %): " + (100.00 - ((100 * wrongClassificationCount) / fileCount)));
-        }
 
-        // Output footer
-        System.out.println("#");
-        System.out.println("# Alpha = " + BayesApp.DEFAULT_FREQUENCY + ", Schwellenwert = " + BayesApp.THRESHOLD);
-        System.out.println("####################################");
-        System.out.println();
+            // Output footer
+            System.out.println("#");
+            System.out.println("# Alpha = " + BayesApp.DEFAULT_FREQUENCY + ", Schwellenwert = " + BayesApp.THRESHOLD);
+            System.out.println("####################################");
+            System.out.println();
+        }
 
     }
 
