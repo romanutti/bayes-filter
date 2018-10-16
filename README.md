@@ -12,7 +12,7 @@ The application can be configured in the class *BayesApp*.
 
 ### Run application
 
-The application can be run using the main-methon in the class *BayesApp*.
+The application can be run using the main-method in the class *BayesApp*.
 
 ## Authors
 
