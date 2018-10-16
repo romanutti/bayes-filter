@@ -16,4 +16,4 @@ The application can be run using the main-methon in the class *BayesApp*.
 
 ## Authors
 
-* **Marco Romanutti** - [FHNW](https://gitlab.fhnw.ch/ML-AT-FHNW/dsp_data_stories)
+* **Marco Romanutti** - [FHNW](https://gitlab.fhnw.ch/marco.romanutti/dist.git)
